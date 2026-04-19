@@ -76,7 +76,7 @@ function nav(id, btn) {
 
 function openField() {
   // Retour vers Bergon Field — même repo/compte GitHub Pages
-  window.location.href = 'https://stephanezunino-bot.github.io/BERGON-FIELD/';
+  window.location.href = 'https://stephanezunino-bot.github.io/BERGON-FIELD/bergon-field-v2.html';
 }
 
 // ═══ BOARD ═══
