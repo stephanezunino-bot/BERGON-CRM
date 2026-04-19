@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -106,34 +105,55 @@ html,body{height:100%;font-family:'Bricolage Grotesque',sans-serif;background:va
 
 /* ══════ DESKTOP RESPONSIVE ══════ */
 @media (min-width: 900px) {
-#app{flex-direction:row;padding-top:0;}
-#topbar{position:static;width:240px;height:100vh;flex-direction:column;align-items:stretch;padding:1.25rem;border-bottom:none;border-right:1px solid var(–border);gap:.75rem;}
-#topbar .brand{font-size:1.3rem;margin-bottom:.5rem;}
-#topbar .topbar-right{flex-direction:column;align-items:stretch;gap:.5rem;margin-top:auto;}
-#topbar .live{padding:.4rem .6rem;border:1px solid var(–border);border-radius:6px;justify-content:center;}
-.pages{padding-left:0;}
-.page{padding:2rem 2.5rem;}
-#botnav{flex-direction:column;border-top:none;border-bottom:1px solid var(–border);padding:1rem .5rem;width:240px;position:absolute;top:120px;left:0;background:transparent;gap:.25rem;}
-.bn{flex:initial;flex-direction:row;justify-content:flex-start;gap:.75rem;padding:.7rem 1rem;border-radius:8px;font-size:.75rem;letter-spacing:.04em;}
-.bn svg{width:20px;height:20px;}
-.bn.on{background:var(–card);color:var(–orc);}
-.bn:hover:not(.on){background:var(–card2);color:var(–txt);}
-.kpi-grid{grid-template-columns:repeat(4,1fr);}
-.kpi .v{font-size:2.5rem;}
-.page{max-width:1100px;margin:0 auto;}
-/* Sur desktop, modales centrées au lieu du bas */
-#mov,#mcfg{align-items:center;}
-.mdl{max-width:520px;border-radius:16px;border:1px solid var(–border2);animation:fade .25s ease;}
-@keyframes fade{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  html,body{overflow:hidden;}
+  #app{flex-direction:row;padding-top:0;height:100vh;}
+
+  /* Sidebar gauche fixe — topbar + botnav ensemble */
+  #topbar{
+    position:static;width:220px;min-width:220px;height:100vh;
+    flex-direction:column;align-items:stretch;
+    padding:1.25rem 1rem;border-bottom:none;
+    border-right:1px solid var(--border);gap:.5rem;
+    flex-shrink:0;overflow:hidden;
+  }
+  #topbar .brand{font-size:1.1rem;margin-bottom:.25rem;}
+  #topbar .topbar-right{flex-direction:column;align-items:stretch;gap:.5rem;margin-top:auto;}
+  #topbar .live{padding:.4rem .6rem;border:1px solid var(--border);border-radius:6px;justify-content:center;}
+
+  /* Zone principale — prend tout le reste */
+  .pages{flex:1;position:relative;overflow:hidden;}
+  .page{padding:2rem;overflow-y:auto;height:100%;}
+
+  /* Botnav devient nav verticale dans la sidebar */
+  #botnav{
+    flex-direction:column;border-top:none;border-bottom:none;
+    padding:.5rem 0;background:transparent;gap:.15rem;
+    flex-shrink:0;
+  }
+  .bn{
+    flex:initial;flex-direction:row;justify-content:flex-start;
+    gap:.75rem;padding:.65rem .75rem;border-radius:8px;
+    font-size:.72rem;letter-spacing:.04em;
+  }
+  .bn svg{width:18px;height:18px;}
+  .bn.on{background:var(--card);color:var(--orc);}
+  .bn:hover:not(.on){background:var(--card2);color:var(--txt);}
+
+  .kpi-grid{grid-template-columns:repeat(4,1fr);}
+  .kpi .v{font-size:2.2rem;}
+
+  /* Modales centrées */
+  #mov,#mcfg{align-items:center;}
+  .mdl{max-width:520px;border-radius:16px;border:1px solid var(--border2);animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 }
 
-/* Grandes largeurs — plus d’espace */
+/* Grandes largeurs — plus d'espace */
 @media (min-width: 1200px) {
-.kpi-grid{gap:1rem;}
-.page{max-width:1280px;}
+  .kpi-grid{gap:1rem;}
+  .page{max-width:1280px;}
 }
 </style>
-
 </head>
 <body>
 
@@ -141,6 +161,13 @@ html,body{height:100%;font-family:'Bricolage Grotesque',sans-serif;background:va
 
 <div id="topbar">
   <div class="brand">BERGON <span>CRM · Données réelles</span></div>
+  <div id="botnav">
+    <button class="bn on" onclick="nav('board',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Board</button>
+    <button class="bn" onclick="nav('clients',this)"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>Clients</button>
+    <button class="bn" onclick="nav('saisie',this)"><svg viewBox="0 0 24 24" style="stroke:var(--orc)"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>Saisir</button>
+    <button class="bn" onclick="nav('rapport',this);renderRapport()"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Rapport</button>
+    <button class="bn" onclick="nav('histo',this);renderHisto()"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Historique</button>
+  </div>
   <div class="topbar-right">
     <div class="live"><div class="live-dot"></div><span id="sync-status">Local</span></div>
     <button class="btn-field" onclick="openField()" title="Retour Bergon Field">← Field</button>
@@ -226,14 +253,6 @@ html,body{height:100%;font-family:'Bricolage Grotesque',sans-serif;background:va
 </div>
 
 </div>
-
-<div id="botnav">
-  <button class="bn on" onclick="nav('board',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Board</button>
-  <button class="bn" onclick="nav('clients',this)"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/><path d="M21 21v-2a4 4 0 00-3-3.87"/></svg>Clients</button>
-  <button class="bn" onclick="nav('saisie',this)"><svg viewBox="0 0 24 24" style="stroke:var(--orc)"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>Saisir</button>
-  <button class="bn" onclick="nav('rapport',this);renderRapport()"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Rapport</button>
-  <button class="bn" onclick="nav('histo',this);renderHisto()"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Historique</button>
-</div>
 </div>
 
 <div id="mov" onclick="if(event.target===this)cM()"><div class="mdl"><div class="mt" id="m-title"></div><div id="m-body"></div><button class="btn bs" onclick="cM()">Fermer</button></div></div>
@@ -254,6 +273,5 @@ html,body{height:100%;font-family:'Bricolage Grotesque',sans-serif;background:va
 <div id="toast"></div>
 
 <script src="crm-app.js"></script>
-
 </body>
 </html>
